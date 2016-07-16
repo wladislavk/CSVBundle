@@ -1,0 +1,3 @@
+services:
+    vkr_csv.csv_creator:
+        class: VKR\CSVBundle\Services\CSVCreator
