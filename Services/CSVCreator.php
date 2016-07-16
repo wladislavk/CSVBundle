@@ -1,5 +1,6 @@
 <?php
 namespace VKR\CSVBundle\Services;
+
 use VKR\CSVBundle\Exception\MalformedCSVFieldsException;
 use VKR\CSVBundle\Exception\MalformedCSVObjectException;
 
