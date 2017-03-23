@@ -1,22 +1,23 @@
 <?php
 namespace VKR\CSVBundle\Tests\Services;
 
+use PHPUnit\Framework\TestCase;
 use VKR\CSVBundle\Exception\MalformedCSVFieldsException;
 use VKR\CSVBundle\Exception\MalformedCSVObjectException;
 use VKR\CSVBundle\Services\CSVCreator;
 use VKR\CSVBundle\TestHelpers\TestEntity;
 
-class CSVCreatorTest extends \PHPUnit_Framework_TestCase
+class CSVCreatorTest extends TestCase
 {
     /**
      * @var CSVCreator
      */
-    protected $csvCreator;
+    private $csvCreator;
 
     /**
      * @var TestEntity[]
      */
-    protected $objectData;
+    private $objectData;
 
     public function setUp()
     {
@@ -102,8 +103,8 @@ class CSVCreatorTest extends \PHPUnit_Framework_TestCase
         $data = 'some string';
         $fields = ['firstProperty', 'secondProperty'];
         $exceptionReflection = new \ReflectionClass(MalformedCSVObjectException::class);
-        $this->setExpectedException($exceptionReflection->getName());
-        $csv = $this->csvCreator->parseDataToCSV($data, $fields);
+        $this->expectException($exceptionReflection->getName());
+        $this->csvCreator->parseDataToCSV($data, $fields);
     }
 
     public function testCSVWithNonStringFields()
@@ -111,8 +112,8 @@ class CSVCreatorTest extends \PHPUnit_Framework_TestCase
         $data = $this->formArrayData();
         $fields = [new \DateTime()]; // can't be implicitly converted to string
         $exceptionReflection = new \ReflectionClass(MalformedCSVFieldsException::class);
-        $this->setExpectedException($exceptionReflection->getName());
-        $csv = $this->csvCreator->parseDataToCSV($data, $fields);
+        $this->expectException($exceptionReflection->getName());
+        $this->csvCreator->parseDataToCSV($data, $fields);
     }
 
     public function testCSVWithCommasInFields()
@@ -120,8 +121,8 @@ class CSVCreatorTest extends \PHPUnit_Framework_TestCase
         $data = $this->formArrayData();
         $fields = ['first,Property', 'secondProperty'];
         $exceptionReflection = new \ReflectionClass(MalformedCSVFieldsException::class);
-        $this->setExpectedException($exceptionReflection->getName());
-        $csv = $this->csvCreator->parseDataToCSV($data, $fields);
+        $this->expectException($exceptionReflection->getName());
+        $this->csvCreator->parseDataToCSV($data, $fields);
     }
 
     public function testCSVWithMalformedCustomIndexes()
@@ -130,8 +131,8 @@ class CSVCreatorTest extends \PHPUnit_Framework_TestCase
         $fields = ['firstProperty', 'secondProperty'];
         $indexes = ['firstIndex', 'secondIndex', 'thirdIndex'];
         $exceptionReflection = new \ReflectionClass(MalformedCSVFieldsException::class);
-        $this->setExpectedException($exceptionReflection->getName());
-        $csv = $this->csvCreator->parseDataToCSV($data, $fields, $indexes);
+        $this->expectException($exceptionReflection->getName());
+        $this->csvCreator->parseDataToCSV($data, $fields, $indexes);
     }
 
     public function testSetHeaders()
@@ -144,7 +145,7 @@ class CSVCreatorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedHeaders, $headers);
     }
 
-    protected function formObjectData()
+    private function formObjectData()
     {
         $firstEntity = new TestEntity();
         $firstEntity->setFirstProperty('first');
@@ -155,7 +156,7 @@ class CSVCreatorTest extends \PHPUnit_Framework_TestCase
         return [$firstEntity, $secondEntity];
     }
 
-    protected function formArrayData()
+    private function formArrayData()
     {
         $firstEntity = [
             'firstProperty' => 'first',
@@ -168,7 +169,7 @@ class CSVCreatorTest extends \PHPUnit_Framework_TestCase
         return [$firstEntity, $secondEntity];
     }
 
-    protected function formDateTimeData()
+    private function formDateTimeData()
     {
         $data = [
             [

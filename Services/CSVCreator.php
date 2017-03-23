@@ -34,8 +34,7 @@ class CSVCreator
         $separatorReplacement = '',
         $dateFormat='',
         $filler = ''
-    )
-    {
+    ) {
         $defaultSeparator = ',';
         $defaultReplacement = ' ';
         if (!$separator) {
@@ -76,7 +75,7 @@ class CSVCreator
         return $headers;
     }
 
-    protected function checkDataObject($dataObject)
+    private function checkDataObject($dataObject)
     {
         if (!is_array($dataObject) && $dataObject instanceof \Traversable !== true) {
             throw new MalformedCSVObjectException();
@@ -89,7 +88,7 @@ class CSVCreator
      * @param string $separator
      * @throws MalformedCSVFieldsException
      */
-    protected function checkFields(array $fields, array $fieldIndexes, $separator)
+    private function checkFields(array $fields, array $fieldIndexes, $separator)
     {
         foreach ($fields as $field) {
             try {
@@ -134,7 +133,7 @@ class CSVCreator
      * @param string $separator
      * @return string
      */
-    protected function setFirstRow(array $fields, array $fieldIndexes, $separator)
+    private function setFirstRow(array $fields, array $fieldIndexes, $separator)
     {
         if (sizeof($fieldIndexes)) {
             return implode($separator, $fieldIndexes) . "\n";
@@ -149,7 +148,7 @@ class CSVCreator
      * @param string $filler
      * @return string
      */
-    protected function getDataValue($row, $field, $dateFormat, $filler)
+    private function getDataValue($row, $field, $dateFormat, $filler)
     {
         $dataValue = $filler;
         if (is_object($row)) {
