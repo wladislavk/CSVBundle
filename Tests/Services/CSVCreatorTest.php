@@ -38,7 +38,7 @@ class CSVCreatorTest extends TestCase
         $data = $this->formArrayData();
         $fields = ['firstProperty', 'secondProperty'];
         $csv = $this->csvCreator->parseDataToCSV($data, $fields);
-        $expected = "firstProperty,secondProperty\nfirst,second\nthird,fourth\n";
+        $expected = "firstProperty,secondProperty\nfirst,second\n1,0\n";
         $this->assertEquals($expected, $csv);
     }
 
@@ -47,7 +47,7 @@ class CSVCreatorTest extends TestCase
         $data = $this->formArrayData();
         $fields = ['firstProperty', 'secondProperty'];
         $csv = $this->csvCreator->parseDataToCSV($data, $fields, [], ';');
-        $expected = "firstProperty;secondProperty\nfirst;second\nthird;fourth\n";
+        $expected = "firstProperty;secondProperty\nfirst;second\n1;0\n";
         $this->assertEquals($expected, $csv);
     }
 
@@ -94,7 +94,7 @@ class CSVCreatorTest extends TestCase
         $fields = ['firstProperty', 'secondProperty'];
         $indexes = ['firstIndex', 'secondIndex'];
         $csv = $this->csvCreator->parseDataToCSV($data, $fields, $indexes);
-        $expected = "firstIndex,secondIndex\nfirst,second\nthird,fourth\n";
+        $expected = "firstIndex,secondIndex\nfirst,second\n1,0\n";
         $this->assertEquals($expected, $csv);
     }
 
@@ -163,8 +163,8 @@ class CSVCreatorTest extends TestCase
             'secondProperty' => 'second',
         ];
         $secondEntity = [
-            'firstProperty' => 'third',
-            'secondProperty' => 'fourth',
+            'firstProperty' => true,
+            'secondProperty' => false,
         ];
         return [$firstEntity, $secondEntity];
     }

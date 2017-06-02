@@ -165,6 +165,9 @@ class CSVCreator
         if ($dataValue instanceof \DateTime) {
             return $dataValue->format($dateFormat);
         }
+        if (is_bool($dataValue)) {
+            $dataValue = intval($dataValue);
+        }
         // force __toString() on value to make any exceptions point to this line
         $dataValue = '' . $dataValue;
         return $dataValue;
